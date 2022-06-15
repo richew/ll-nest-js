@@ -12,16 +12,21 @@ import { Request, Response } from 'express';
 import { ActionsService } from './service';
 import { Action } from '../models/action';
 
-@Controller('actions')
+@Controller('actions') // /actions
 export class ActionsController {
   constructor(private readonly actionsService: ActionsService) {}
 
-  @Get()
+  @Get() // /actions
   getAll(): Promise<Action[]> {
     return this.actionsService.getAll();
   }
 
-  @Get('/:id')
+  @Get('/type/:type')
+  getByType(@Param('type') type: string): Promise<Action[]> {
+    return this.actionsService.getType(type);
+  }
+
+  @Get('/:id') // /actions/2
   async get(
     @Param('id') id: number,
       @Res() response: Response,
@@ -37,7 +42,7 @@ export class ActionsController {
     return response.send(action);
   }
 
-  @Post()
+  @Post() // /actions
   async create(
     @Req() request: Request,
       @Res() response: Response,
@@ -61,7 +66,7 @@ export class ActionsController {
     return response.send(await this.actionsService.save(action));
   }
 
-  @Delete('/:id')
+  @Delete('/:id') // /actions/2
   async del(
     @Param('id') id: number,
       @Res() response: Response,

@@ -6,6 +6,10 @@ import { ActionsController } from './actions/controller';
 import { ActionsService } from './actions/service';
 import { ActionsModule } from './actions/module';
 import { Action } from './models/action';
+import { CatGenController } from './cat-gen/cat-gen.controller';
+import { CatGenService } from './cat-gen/cat-gen.service';
+import { CatGenModule } from './cat-gen/module';
+import {Cat} from "./models/cat";
 
 const host = process.env.DB_HOST ?? 'localhost';
 const port = process.env.DB_PORT ?? 5432;
@@ -22,12 +26,13 @@ const database = process.env.DB_NAME ?? 'test';
       username,
       password,
       database,
-      entities: [Action],
+      entities: [Action, Cat],
       synchronize: true,
     }),
     ActionsModule,
+    CatGenModule,
   ],
-  controllers: [AppController, ActionsController],
-  providers: [AppService, ActionsService],
+  controllers: [AppController, ActionsController, CatGenController],
+  providers: [AppService, ActionsService, CatGenService],
 })
 export class AppModule {}

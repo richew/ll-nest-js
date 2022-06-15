@@ -19,6 +19,10 @@ export class ActionsService {
     return this.userRepository.findOne({ where: { id } });
   }
 
+  getType(type: string): Promise<Action[]> {
+    return this.userRepository.find({ where: { type } });
+  }
+
   delete(id) {
     return this.userRepository.delete(id);
   }
